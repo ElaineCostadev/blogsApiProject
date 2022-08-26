@@ -6,7 +6,7 @@
 
 const BlogPost = (sequelize, DataTypes) => {
   const blogPost = sequelize.define('BlogPost', {
-    id: { type: DataTypes.INTEGER, primaryKey: true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 
     title: DataTypes.STRING,
 
@@ -14,9 +14,9 @@ const BlogPost = (sequelize, DataTypes) => {
 
     userId: { type: DataTypes.STRING, foreignKey: true, allowNull: false, },
 
-    published: { type: DataTypes.timestamps, allowNull: false, defaultValue: sequelize.literal("CURRENT_TIMESTAMP")},
+    published: { type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.literal("CURRENT_TIMESTAMP")},
 
-    updated: { type: DataTypes.timestamps, allowNull: false, defaultValue: sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")},
+    updated: { type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")},
   }, {
     timestamps: false,
     tableName: 'BlogPosts',
