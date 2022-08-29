@@ -6,15 +6,17 @@
 
 const User = (sequelize, DataTypes) => {
   const user = sequelize.define('User', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     displayName: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: { type: DataTypes.STRING, unique: true
+    },
     password: DataTypes.STRING,
     image: DataTypes.STRING
   },
   {
     timestamps: false,
     tableName: 'Users',
+    underscored: false,
 });
 
 user.associate = (models) => {
@@ -28,3 +30,6 @@ user.associate = (models) => {
 };
 
 module.exports = User;
+
+// poderia fazer a validação aqui, porem, a msg de erro está diferente do test.
+// isEmail: { msg: '"email" must be a valid email' },
