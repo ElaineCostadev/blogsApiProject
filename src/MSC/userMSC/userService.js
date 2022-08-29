@@ -3,9 +3,15 @@ const CustomError = require('../../errors/CustomError');
 const { generateToken } = require('../../helpers/jwtHelpers');
 
 const userService = {
+  getAll: async () => {
+    const allUsers = await User.findAll({
+      attributes: { exclude: ['password'] },
+    });
+    return allUsers;
+  },
+
   create: async ({ displayName, email, password, image }) => {
     const checkIfEmailexists = await User.findOne({
-
       where: { email },
       attributes: ['email'],
       raw: false,
