@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const CustomError = require('../errors/CustomError');
 require('dotenv/config');
 
 const jwtSecret = process.env.JWT_SECRET;
@@ -6,7 +7,7 @@ const jwtSecret = process.env.JWT_SECRET;
 const jwtCode = {
   generateToken: (data) => {
     const token = jwt.sign(
-      { data },
+      { data: data.email },
       jwtSecret,
       { expiresIn: '4d', algorithm: 'HS256' },
     );
@@ -19,7 +20,7 @@ const jwtCode = {
       const decode = jwt.verify(token, jwtSecret);
       return decode;
     } catch (error) {
-      throw new Error('Token not found');
+      if (!token) throw new CustomError('401', 'Token not found');
     }
   },
 };
