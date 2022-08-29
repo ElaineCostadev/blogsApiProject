@@ -22,12 +22,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
         unique: true,
-        validate: {
-          // isEmail: true,
-          isEmail: {
-          msg: 'Please enter your email'
-          }
-        }
+        
       },
       password: {
         allowNull: false,
@@ -43,3 +38,11 @@ module.exports = {
     await queryInterface.dropTable('Users');
   }
 };
+
+
+/* validate: {
+  // isEmail: true,
+  isEmail: {
+  msg: 'Please enter your email'
+  }
+} */
