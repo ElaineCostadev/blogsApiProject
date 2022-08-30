@@ -6,25 +6,25 @@
 
 const BlogPost = (sequelize, DataTypes) => {
   const blogPost = sequelize.define('BlogPost', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
 
-    title: DataTypes.STRING,
+    title: { type: DataTypes.STRING, allowNull: false },
 
-    content: DataTypes.STRING,
+    content: { type: DataTypes.STRING, allowNull: false },
 
     userId: { type: DataTypes.STRING, foreignKey: true, allowNull: false, },
 
-    published: { type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.literal("CURRENT_TIMESTAMP")},
+    published: { type: DataTypes.DATE, defaultValue: DataTypes.NOW,  /* , defaultValue: sequelize.literal("CURRENT_TIMESTAMP") */},
 
-    updated: { type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")},
+    updated: { type: DataTypes.DATE, defaultValue: DataTypes.NOW, /* ,  defaultValue: sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP") */},
   }, {
     timestamps: false,
     tableName: 'BlogPosts',
-    underscored: true,
+    underscored: false,
   });
 
   blogPost.associate = (models) => {
-    blogPost.belongsTo(models.User, { foreignKey: 'userId', as: 'Users' });
+    blogPost.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
     // esse as deve ser maiusculo ou minusculo? do que se refere?
 
   };
