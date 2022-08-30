@@ -7,7 +7,7 @@ const tokenValidation = (req, _res, next) => {
   const { authorization } = req.headers;
   const data = jwtHelpers.validateToken(authorization, jwtSecret);
   if (!data) throw new CustomError('401', 'Expired or invalid token');
-  // req.email = data;
+  req.email = data;
   next();
 };
 
