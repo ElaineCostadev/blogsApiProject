@@ -13,7 +13,7 @@ const userService = {
   getByPk: async (id) => {
     const findUser = await User.findByPk(id, {
       attributes: { exclude: ['password'] },
-      logging: console.log,
+      // logging: console.log,
       raw: false,
     });
     if (!findUser) throw new CustomError('404', 'User does not exist');
