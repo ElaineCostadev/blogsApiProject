@@ -5,16 +5,16 @@ require('dotenv/config');
 const jwtSecret = process.env.JWT_SECRET;
 
 const jwtCode = {
-  generateToken: (data) => {
+  generateToken: (payload) => {
     const token = jwt.sign(
-      { data: data.email },
+      payload,
       jwtSecret,
       { expiresIn: '4d', algorithm: 'HS256' },
     );
       
     return token;
   },
-
+  
   validateToken: (token) => {
     try {
       const decode = jwt.verify(token, jwtSecret);
