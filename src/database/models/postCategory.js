@@ -19,7 +19,7 @@ const PostCategory = (sequelize, DataTypes) => {
     },
   },
   { timestamps: false,
-    underscored: true,
+    underscored: false,
     tableName: 'PostCategories',
   },
   );
@@ -27,7 +27,7 @@ const PostCategory = (sequelize, DataTypes) => {
   postCategory.associate = (models) => {
 
     models.BlogPost.belongsToMany(models.Category, {
-      as: 'Categories',
+      as: 'categories',
       through: 'PostCategory',
       foreignKey: 'postId',
       otherKey: 'categoryId',
