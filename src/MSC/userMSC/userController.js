@@ -3,7 +3,7 @@ const userService = require('./userService');
 const userController = {
   getAll: async (_req, res) => {
     const result = await userService.getAll();
-    res.status(200).json(result);
+    return res.status(200).json(result);
   },
 
   getByPk: async (req, res) => {
@@ -21,7 +21,7 @@ const userController = {
     const { displayName, email, password, image } = req.body;
     try {
       const result = await userService.create({ displayName, email, password, image });
-      res.status(201).json({ token: result });
+      return res.status(201).json({ token: result });
     } catch (error) {
       return res.status(error.status)
       .json({ message: error.message });
