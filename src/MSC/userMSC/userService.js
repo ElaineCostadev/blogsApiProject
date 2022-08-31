@@ -24,14 +24,13 @@ const userService = {
     const checkIfEmailexists = await User.findOne({
       where: { email },
       attributes: ['email'],
-      raw: false,
     });
 
-    if (checkIfEmailexists) throw new CustomError('409', 'User already registered');
-    
-    const user = await User.create({ displayName, email, password, image });
-
-    const token = generateToken(user.email);
+    if (checkIfEmailexists) {
+      throw new CustomError('409', 'User already registered');
+    } 
+    await User.create({ displayName, email, password, image });
+    const token = generateToken({ email });
 
     return token;
   },
