@@ -7,8 +7,7 @@ const loginController = {
       const result = await loginService.login(email, password);
       res.status(200).json({ token: result });
     } catch (error) {
-      return res
-      .status(400)
+      return res.status(error.status)
       .json({ message: error.message });
     }
   },
