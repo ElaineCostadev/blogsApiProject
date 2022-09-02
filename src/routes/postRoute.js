@@ -8,5 +8,6 @@ const validateBlogPost = require('../middlewares/validateBlogPost');
 
 postRoute.post('/', tokenValidation, validateBlogPost, postController.create);
 postRoute.get('/', tokenValidation, postController.getAll);
+postRoute.get('/:id', tokenValidation, postController.getByPk);
 
 module.exports = postRoute;
