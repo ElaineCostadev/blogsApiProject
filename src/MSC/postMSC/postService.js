@@ -2,9 +2,8 @@ const Sequelize = require('sequelize');
 const config = require('../../database/config/config');
 
 const sequelize = new Sequelize(config.development);
-const { BlogPost } = require('../../database/models');
-const { User } = require('../../database/models');
-const { PostCategory } = require('../../database/models');
+const { BlogPost, User, PostCategory } = require('../../database/models');
+const CustomError = require('../../errors/CustomError');
 
 // https://runebook.dev/pt/docs/sequelize/manual/eager-loading
 const postService = {
@@ -14,6 +13,24 @@ const postService = {
     });
 
     return allInfos;
+  },
+
+  getByPk: async (id) => {
+    const findInfo = await BlogPost.findByPk(id, {
+      include: { all: true, attributes: { exclude: ['password'] } } });
+      if (findInfo === null) throw new CustomError('404', 'Post does not exist');
+    return findInfo;
+       /*  model: User,
+        as: 'user',
+          attributes: {
+          exclude: ['password'],
+          },
+          through: PostCategory, 
+            include: {
+              model: Category,
+              as: 'categories',
+            }, 
+      }, */
   },
 
   create: async ({ title, content, categoryIds, email }) => {
