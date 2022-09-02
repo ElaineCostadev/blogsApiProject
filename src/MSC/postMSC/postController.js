@@ -6,6 +6,16 @@ const postController = {
     return res.status(200).json(result);
   },
 
+  getByPk: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const result = await postService.getByPk(id);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(error.status).json({ message: error.message });
+    }
+  },
+
   create: async (req, res) => {
     try {
       // peguei o email que vem do token na rota do login - tokenValidation
