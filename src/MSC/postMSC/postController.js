@@ -29,6 +29,21 @@ const postController = {
         return res.status(400).json({ message: '"categoryIds" not found' });
     }
   },
+
+  update: async (req, res) => {
+    const { title, content } = req.body;
+    try {
+      const { id } = req.params;
+      const { email } = req.email;
+      console.log(id, title, content, 'id, title, content DO CONTROLLER');
+      const result = await postService.update({ email, id, title, content });
+      console.log(result, 'result do CONTROLLER');
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(error.status).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = postController;
