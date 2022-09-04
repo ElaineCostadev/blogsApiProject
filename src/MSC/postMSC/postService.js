@@ -70,6 +70,22 @@ const postService = {
     return findbyPk;
   },
 
+  destroy: async ({ id, email }) => {
+  // verifico se o usuario existe  
+    const findUser = await User.findOne({
+      where: { email }, attributes: ['id', 'email'], raw: true,
+    });
+    const findbyPk = await BlogPost.findByPk(id, {
+      include: { all: true, attributes: { exclude: ['password'] } } });
+    // console.log(findbyPk, 'findbyPk SERVICE');
+      if (findbyPk === null) throw new CustomError('404', 'Post does not exist');
+      if (findbyPk.userId !== findUser.id) throw new CustomError('401', 'Unauthorized user');
+
+    await BlogPost.destroy({ where: { userId: findUser.id, id } });
+
+    return null;
+  },
+
 };
 
 module.exports = postService;
