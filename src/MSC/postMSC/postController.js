@@ -26,7 +26,7 @@ const postController = {
       // console.log(result, 'result do Controller');
       res.status(201).json(result);
     } catch (error) {
-        return res.status(400).json({ message: '"categoryIds" not found' });
+      return res.status(400).json({ message: '"categoryIds" not found' });
     }
   },
 
@@ -35,13 +35,22 @@ const postController = {
     try {
       const { id } = req.params;
       const { email } = req.email;
-      console.log(id, title, content, 'id, title, content DO CONTROLLER');
       const result = await postService.update({ email, id, title, content });
-      console.log(result, 'result do CONTROLLER');
-      res.status(200).json(result);
+
+      return res.status(200).json(result);
     } catch (error) {
-      console.log(error);
-      res.status(error.status).json({ message: error.message });
+      return res.status(error.status).json({ message: error.message });
+    }
+  },
+
+  destroy: async (req, res) => {
+    const { id } = req.params;
+    const { email } = req.email;
+    try {
+      await postService.destroy({ id, email });
+      return res.status(204).end();
+    } catch (error) {
+      return res.status(error.status).json({ message: error.message });
     }
   },
 };
