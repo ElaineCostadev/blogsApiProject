@@ -40,7 +40,7 @@ const userService = {
       where: { email },
       attributes: ['id', 'email'],
     });
-    console.log(checkIfEmailexists, 'checkIfEmailexists SERVICE');
+    
     await User.destroy({ where: { id: checkIfEmailexists.id } });
   },
 };
