@@ -34,6 +34,15 @@ const userService = {
 
     return token;
   },
+
+  destroy: async (email) => {
+    const checkIfEmailexists = await User.findOne({
+      where: { email },
+      attributes: ['id', 'email'],
+    });
+    console.log(checkIfEmailexists, 'checkIfEmailexists SERVICE');
+    await User.destroy({ where: { id: checkIfEmailexists.id } });
+  },
 };
 
 module.exports = userService;
