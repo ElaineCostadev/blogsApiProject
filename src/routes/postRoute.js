@@ -10,5 +10,6 @@ postRoute.post('/', tokenValidation, validateBlogPost, postController.create);
 postRoute.get('/', tokenValidation, postController.getAll);
 postRoute.get('/:id', tokenValidation, postController.getByPk);
 postRoute.put('/:id', tokenValidation, validateBlogPost, postController.update);
+postRoute.delete('/:id', tokenValidation, postController.destroy);
 
 module.exports = postRoute;
