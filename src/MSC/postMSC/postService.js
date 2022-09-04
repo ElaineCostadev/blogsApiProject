@@ -53,6 +53,23 @@ const postService = {
 
     return resultTransaction;
   },
+
+  update: async ({ email, id, title, content }) => {
+  // verificar se o usuario existe
+  const findUser = await User.findOne({
+    where: { email }, attributes: ['id', 'email'], raw: true,
+  });
+
+  // verificar o post a ser alterado com id.
+  await BlogPost.update({ title, content }, { where: { userId: findUser.id, id } });
+    //   console.log(updatBlogPost, 'updatBlogPost do SERVICE');
+    const findbyPk = await BlogPost.findByPk(id, {
+      include: { all: true, attributes: { exclude: ['password'] } } });
+      if (findbyPk === null) throw new CustomError('404', 'Post does not exist');
+      if (findbyPk.userId !== findUser.id) throw new CustomError('401', 'Unauthorized user');
+    return findbyPk;
+  },
+
 };
 
 module.exports = postService;
