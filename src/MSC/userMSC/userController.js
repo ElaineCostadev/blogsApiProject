@@ -27,6 +27,12 @@ const userController = {
       .json({ message: error.message });
     }
   },
+
+  destroy: async (req, res) => {
+    const { email } = req.email;
+    await userService.destroy(email);
+    res.status(204).end();
+  },
 };
 
 module.exports = userController;
